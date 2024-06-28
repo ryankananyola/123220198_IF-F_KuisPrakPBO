@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pkg123220198_kuis;
+package View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/**
- *
- * @author Lab Informatika
- */
 public class LoginPage extends JFrame implements ActionListener{
+    
     //JLabel
     JLabel Header = new JLabel("Silahkan Login");
     JLabel LabelUsername = new JLabel("Username");
@@ -21,12 +13,12 @@ public class LoginPage extends JFrame implements ActionListener{
     
     //JTextField
     JTextField inputUsername = new JTextField();
-    JTextField inputPassword = new JTextField();
+    JPasswordField inputPassword = new JPasswordField();
     
     //JButton
     JButton tombolLogin = new JButton("Login");
     
-    LoginPage(){
+    public LoginPage(){
         setVisible(true);
         setSize(500,350);
         setTitle("Login Page");
@@ -59,7 +51,7 @@ public class LoginPage extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try{
            String username = inputUsername.getText();
-           String password = inputPassword.getText();
+           String password = new String(inputPassword.getPassword());
            
            if(username.isEmpty() && password.isEmpty()){
                throw new Exception("Username dan Password Belum Diisi");
@@ -69,7 +61,9 @@ public class LoginPage extends JFrame implements ActionListener{
                throw new Exception("Password belum diisi");
            }
            
-           new HalamanUtama(username);
+           Session.setUsername(username);
+           
+           new HalamanUtama();
            this.dispose();
            
         }catch(Exception error){
