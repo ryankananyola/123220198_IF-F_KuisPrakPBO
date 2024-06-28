@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pkg123220198_kuis;
+package View.HalPembelian;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.text.DecimalFormat;
+import javax.swing.*;
+import Perhitungan.Harga;
+import View.HalamanUtama;
+import View.Session;
+import java.text.DecimalFormatSymbols;
 
-/**
- *
- * @author Lab Informatika
- */
 public class HalamanPembelianAnak extends JFrame implements ActionListener {
+    
     JLabel Header = new JLabel("Halaman Pembelian");
     JLabel labelKategori = new JLabel("Kategori");
     JLabel hasilKategori = new JLabel();
@@ -36,10 +30,14 @@ public class HalamanPembelianAnak extends JFrame implements ActionListener {
     JButton tombolKembali = new JButton("Kembali");
     JButton tombolBeli = new JButton("Beli");
     
-    HalamanPembelianAnak(){
+    String username;
+    
+    public HalamanPembelianAnak(){
+        this.username = Session.getUsername();
+        
         setVisible(true);
         setSize(500,450);
-        setTitle("Halaman Utama");
+        setTitle("Halaman Pembelian Majalah Anak");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -65,32 +63,51 @@ public class HalamanPembelianAnak extends JFrame implements ActionListener {
         
         add(tombolKembali);
         tombolKembali.setBounds(40, 160, 200, 24);
+        tombolKembali.addActionListener(this);
         add(tombolBeli);
         tombolBeli.setBounds(250, 160, 200, 24);
+        tombolBeli.addActionListener(this);
         
         add(labelTotalPembelian);
         labelTotalPembelian.setBounds(20, 210, 440, 24);
         add(labelHargaSatuan);
         labelHargaSatuan.setBounds(20, 240, 440, 24);
         add(hasilHargaSatuan);
-        hasilHargaSatuan.setText("Rp12.700");
         hasilHargaSatuan.setBounds(190, 240, 440, 24);
         add(labelJumlah);
         labelJumlah.setBounds(20, 270, 440, 24);
         add(hasilJumlah);
-        hasilJumlah.setText("Ini hasil Input");
         hasilJumlah.setBounds(190, 270, 440, 24);
         add(labelTotalHarga);
         labelTotalHarga.setBounds(20, 300, 440, 24);
         add(hasilTotalHarga);
-        hasilTotalHarga.setText("Ini Total Harga");
         hasilTotalHarga.setBounds(190, 300, 440, 24);
-        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getSource() == tombolBeli) {
+            try {
+                int jumlah = Integer.parseInt(inputJumlah.getText());
+                Harga harga = new Harga(jumlah, 0);
+                
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                symbols.setGroupingSeparator('.'); 
+                symbols.setDecimalSeparator(',');  
+
+                DecimalFormat formatter = new DecimalFormat("#,###", symbols);
+                hasilHargaSatuan.setText("Rp12.700");
+                hasilJumlah.setText(String.valueOf(jumlah));
+                hasilTotalHarga.setText("Rp" + formatter.format(harga.hargaAnak()));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Masukkan jumlah yang valid", "Error", JOptionPane.ERROR_MESSAGE);
+                hasilJumlah.setText("");
+                hasilTotalHarga.setText("");
+            }
+        }
+        else if (e.getSource() == tombolKembali){
+            dispose();
+            new HalamanUtama();
+        }
     }
-    
 }

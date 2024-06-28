@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pkg123220198_kuis;
+package View.HalPembelian;
 
+import Perhitungan.Harga;
+import View.HalamanUtama;
+import View.Session;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.*;
 
-/**
- *
- * @author Lab Informatika
- */
-public class HalamanPembelianRemaja extends JFrame implements ActionListener {
+public class HalamanPembelianDewasa extends JFrame implements ActionListener {
+    
     JLabel Header = new JLabel("Halaman Pembelian");
     JLabel labelKategori = new JLabel("Kategori");
     JLabel hasilKategori = new JLabel();
@@ -34,10 +30,14 @@ public class HalamanPembelianRemaja extends JFrame implements ActionListener {
     JButton tombolKembali = new JButton("Kembali");
     JButton tombolBeli = new JButton("Beli");
     
-    HalamanPembelianRemaja(){
+    String username;
+    
+    public HalamanPembelianDewasa(){
+        this.username = Session.getUsername();
+        
         setVisible(true);
         setSize(500,450);
-        setTitle("Halaman Utama");
+        setTitle("Halaman Pembelian Majalah Dewasa");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -48,12 +48,12 @@ public class HalamanPembelianRemaja extends JFrame implements ActionListener {
         add(labelKategori);
         labelKategori.setBounds(20, 60, 440, 24);
         add(hasilKategori);
-        hasilKategori.setText("Majalah Remaja");
+        hasilKategori.setText("Majalah Dewasa");
         hasilKategori.setBounds(190, 60, 440, 24);
         add(labelHarga);
         labelHarga.setBounds(20, 90, 440, 24);
         add(hasilHarga);
-        hasilHarga.setText("Rp15.200 /pcs");
+        hasilHarga.setText("Rp26.900 /pcs");
         hasilHarga.setBounds(190, 90, 440, 24);
         add(labelInputJumlah);
         labelInputJumlah.setBounds(20, 120, 440, 24);
@@ -63,32 +63,53 @@ public class HalamanPembelianRemaja extends JFrame implements ActionListener {
         
         add(tombolKembali);
         tombolKembali.setBounds(40, 160, 200, 24);
+        tombolKembali.addActionListener(this);
         add(tombolBeli);
         tombolBeli.setBounds(250, 160, 200, 24);
+        tombolBeli.addActionListener(this);
         
         add(labelTotalPembelian);
         labelTotalPembelian.setBounds(20, 210, 440, 24);
         add(labelHargaSatuan);
         labelHargaSatuan.setBounds(20, 240, 440, 24);
         add(hasilHargaSatuan);
-        hasilHargaSatuan.setText("Rp15.200");
         hasilHargaSatuan.setBounds(190, 240, 440, 24);
         add(labelJumlah);
         labelJumlah.setBounds(20, 270, 440, 24);
         add(hasilJumlah);
-        hasilJumlah.setText("Ini hasil Input");
         hasilJumlah.setBounds(190, 270, 440, 24);
         add(labelTotalHarga);
         labelTotalHarga.setBounds(20, 300, 440, 24);
         add(hasilTotalHarga);
-        hasilTotalHarga.setText("Ini Total Harga");
         hasilTotalHarga.setBounds(190, 300, 440, 24);
         
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getSource() == tombolBeli) {
+            try {
+                int jumlah = Integer.parseInt(inputJumlah.getText());
+                Harga harga = new Harga(jumlah, 0);
+                
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                symbols.setGroupingSeparator('.'); 
+                symbols.setDecimalSeparator(',');  
+
+                DecimalFormat formatter = new DecimalFormat("#,###", symbols);
+                hasilHargaSatuan.setText("Rp26.900");
+                hasilJumlah.setText(String.valueOf(jumlah));
+                hasilTotalHarga.setText("Rp" + formatter.format(harga.hargaDewasa()));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Masukkan jumlah yang valid", "Error", JOptionPane.ERROR_MESSAGE);
+                hasilJumlah.setText("");
+                hasilTotalHarga.setText("");
+            }
+        }
+        else if (e.getSource()==tombolKembali){
+            dispose();
+            new HalamanUtama();
+        }
     }
-    
+
 }
