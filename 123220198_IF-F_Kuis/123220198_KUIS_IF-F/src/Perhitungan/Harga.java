@@ -1,36 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Perhitungan;
 
-/**
- *
- * @author Lab Informatika
- */
-public class MajalahAnak implements HitungHarga{
+public class Harga implements HitungHarga {
     
-    private double jumlah,totalharga;
+    private double jumlah;
     
-    public MajalahAnak(double jumlah, double totalharga){
-        this.jumlah = jumlah;
-        this.totalharga = totalharga;
-    }
-    
-    public double getjumlah(){
-        return jumlah;
-    }
-    
-    public void setjumlah(double jumlah){
+    public Harga(double jumlah, double totalharga){
         this.jumlah = jumlah;
     }
     
-    public double gettotalharga(){
+    public double getJumlah(){
         return jumlah;
     }
     
-    public void settotalharga(double jumlah){
+    public void setJumlah(double jumlah){
         this.jumlah = jumlah;
     }
 
@@ -48,5 +30,4 @@ public class MajalahAnak implements HitungHarga{
     public double hargaDewasa() {
         return jumlah * 26900;
     }
-    
 }
