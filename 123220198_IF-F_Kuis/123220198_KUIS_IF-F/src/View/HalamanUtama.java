@@ -60,6 +60,7 @@ public class HalamanUtama extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try{
             if(e.getSource()== majalahAnak){
+                dispose();
                 new HalamanPembelianAnak();
             }else if(e.getSource()== majalahRemaja){
                 dispose();
