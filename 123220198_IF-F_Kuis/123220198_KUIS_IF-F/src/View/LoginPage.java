@@ -1,22 +1,27 @@
 package View;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class LoginPage extends JFrame implements ActionListener{
     
-    //JLabel
+    // JLabel
     JLabel Header = new JLabel("Silahkan Login");
     JLabel LabelUsername = new JLabel("Username");
     JLabel LabelPassword = new JLabel("Password");
     
-    //JTextField
+    // JTextField
     JTextField inputUsername = new JTextField();
     JPasswordField inputPassword = new JPasswordField();
     
-    //JButton
+    // JButton
     JButton tombolLogin = new JButton("Login");
+    
+    // Credentials
+    private static final String USERNAME_VALID = "123230016";
+    private static final String PASSWORD_VALID = "ayudyacantik";
     
     public LoginPage(){
         setVisible(true);
@@ -26,7 +31,9 @@ public class LoginPage extends JFrame implements ActionListener{
         setLayout(null);
         setLocationRelativeTo(null);
         
-        //tampil JLabel
+        getContentPane().setBackground(Color.PINK);
+        
+        // tampil JLabel
         add(Header);
         Header.setBounds(20, 20, 440, 24);
         Header.setFont(Header.getFont().deriveFont(20.0f));
@@ -35,16 +42,17 @@ public class LoginPage extends JFrame implements ActionListener{
         add(LabelPassword);
         LabelPassword.setBounds(40, 140, 440, 24);
         
-        //tampil JTextField
+        // tampil JTextField
         add(inputUsername);
         inputUsername.setBounds(150, 80, 300, 24);
         add(inputPassword);
         inputPassword.setBounds(150, 140, 300, 24);
         
-        //tampil JButton
+        // tampil JButton
         add(tombolLogin);
         tombolLogin.setBounds(200, 200, 100, 24);
         tombolLogin.addActionListener(this);
+        tombolLogin.setBackground(Color.GREEN);
     }
 
     @Override
@@ -57,19 +65,21 @@ public class LoginPage extends JFrame implements ActionListener{
                throw new Exception("Username dan Password Belum Diisi");
            } else if(username.isEmpty()){
                throw new Exception("Username belum diisi");
-           }else if(password.isEmpty()){
+           } else if(password.isEmpty()){
                throw new Exception("Password belum diisi");
            }
            
-           Session.setUsername(username);
+           // Validasi login
+           if(username.equals(USERNAME_VALID) && password.equals(PASSWORD_VALID)) {
+               Session.setUsername(username);
+               new HalamanUtama();
+               this.dispose();
+           } else {
+               throw new Exception("Username atau Password salah");
+           }
            
-           new HalamanUtama();
-           this.dispose();
-           
-        }catch(Exception error){
+        } catch(Exception error){
             JOptionPane.showMessageDialog(this, error.getMessage());
         }
     }
-    
-    
 }

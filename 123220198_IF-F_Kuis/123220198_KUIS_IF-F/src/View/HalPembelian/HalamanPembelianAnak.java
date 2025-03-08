@@ -7,6 +7,7 @@ import javax.swing.*;
 import Perhitungan.Harga;
 import View.HalamanUtama;
 import View.Session;
+import java.awt.Color;
 import java.text.DecimalFormatSymbols;
 
 public class HalamanPembelianAnak extends JFrame implements ActionListener {
@@ -41,6 +42,8 @@ public class HalamanPembelianAnak extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+        
+        getContentPane().setBackground(Color.PINK);
         
         add(Header);
         Header.setBounds(20, 20, 440, 24);
@@ -97,7 +100,7 @@ public class HalamanPembelianAnak extends JFrame implements ActionListener {
 
                 DecimalFormat formatter = new DecimalFormat("#,###", symbols);
                 hasilHargaSatuan.setText("Rp12.700");
-                hasilJumlah.setText(String.valueOf(jumlah));
+                hasilJumlah.setText(jumlah + " pcs");
                 hasilTotalHarga.setText("Rp" + formatter.format(harga.hargaAnak()));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Masukkan jumlah yang valid", "Error", JOptionPane.ERROR_MESSAGE);

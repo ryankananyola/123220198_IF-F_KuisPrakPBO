@@ -3,6 +3,7 @@ package View;
 import View.HalPembelian.HalamanPembelianDewasa;
 import View.HalPembelian.HalamanPembelianRemaja;
 import View.HalPembelian.HalamanPembelianAnak;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -31,6 +32,8 @@ public class HalamanUtama extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+        
+        getContentPane().setBackground(Color.PINK);
         
         //tampil JLabel
         add(Header);
